@@ -1,0 +1,2 @@
+* Bugs
+** TODO Message "Backlink cache is empty" shown repetedly on opening a file
