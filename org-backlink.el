@@ -1,3 +1,9 @@
+;;; org-backlink.el --- Show backlinks for orgmode entries
+
+;;; Commentary:
+
+;;; Code:
+
 (defvar org-backlink-mode-files org-agenda-files
   "These files and directories are scanned for backlinks.")
 
@@ -207,3 +213,6 @@
     (add-hook 'post-command-hook 'org-backlink-mode-show-backlinks t t)
     (remove-hook 'post-command-hook 'org-backlink-mode-show-backlinks t)
     (delete-overlay org-backlink-mode-overlay)))
+
+(provide 'org-backlink)
+;;; org-backlink.el ends here
