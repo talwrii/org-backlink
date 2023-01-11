@@ -51,7 +51,7 @@
                                    (directory-files-recursively elem "" nil (lambda (args...) nil) nil)
                                    )
                                   (-
-                                   [elem]))))
+                                   (list elem)))))
                   (seq-concatenate 'list filelist)
                   )
                 )
