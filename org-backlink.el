@@ -67,11 +67,12 @@
   (interactive)
   (let ((org-link-search-inhibit-query t)
         (linkcache (make-hash-table :test 'equal))
-        (storefunc (lambda (linkcache source-file source-path)
+        (storefunc (lambda (linkcache source-file source-title source-id)
                      (let* ((dest (org-backlink-mode-get-heading-path-string))
                             (entry (gethash dest linkcache))
                             (link (list 'file source-file
-                                        'path source-path)))
+                                        'path source-path
+                                        'id source-id)))
                        (message "Adding %s as a destination for source %s %s" dest source-file source-path)
                        (unless (member link entry)
                          (puthash dest
@@ -84,12 +85,13 @@
           (while (re-search-forward "\\[\\[\\(file\\|id\\):.*?\\]\\[.*?\\]\\]" nil t)
             (backward-char) ;; This search query lends us at the end of the link, where org-open-at-point cannot doesn't work
             (let* ((source-path (org-backlink-mode-get-heading-path))
-                   (source-file (buffer-file-name)))
+                   (source-file (buffer-file-name))
+                   (source-id (org-id-get)))
               (save-excursion
                 (org-open-at-point)
 
                 ;; otherwise we can process it right away
-                (funcall storefunc linkcache source-file source-path)))))))
+                (funcall storefunc linkcache source-file source-path source-id)))))))
 
     (setq org-backlink-cache linkcache)
     (message "Done.")))
@@ -192,10 +194,7 @@
                        (completing-read "Select a backlink: " candidates))
                      candidates))
                 (car org-backlink-current-entry-backlinks))))
-        (find-file (plist-get selected 'file))
-        (goto-char (point-min))
-        (dolist (elem (plist-get selected 'path))
-          (re-search-forward (concat "^\\*+ *"(regexp-quote elem)))))
+        (org-id-goto (plist-get selected 'id)))
 
     (message "No backlink available here.")))
 
