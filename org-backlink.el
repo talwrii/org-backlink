@@ -205,7 +205,7 @@
   :init-value nil
   :lighter " OrgBL"
   :keymap (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "C-c l") 'org-backlink-mode-visit-backlink)
+            (define-key map (kbd "C-c b") 'org-backlink-mode-visit-backlink)
             map)
 
   (if org-backlink-mode
