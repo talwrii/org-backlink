@@ -52,7 +52,7 @@
                                    )
                                   (-
                                    (list elem)))))
-                  (seq-concatenate 'list filelist)
+                  (append list filelist)
                   )
                 )
               files
